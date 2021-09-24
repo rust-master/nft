@@ -16,5 +16,4 @@ contract Emoji is ERC721Full {
     _mint(msg.sender, _id);
     _emojisExists[_emoji] = true;
   }
-
 }
