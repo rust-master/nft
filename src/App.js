@@ -13,7 +13,7 @@ const styles = (theme) => ({
     backgroundColor: "#fff",
     maxWidth: 200,
     marginTop: 20,
-    marginLeft: 20,
+    marginLeft: 80,
   },
   Typo1: {
     color: "#266AFB",
@@ -26,6 +26,9 @@ class App extends React.Component {
   async componentWillMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
+  }
+  componentDidMount() {
+    document.body.style.backgroundColor = "#d9ecec";
   }
 
   async loadWeb3() {
