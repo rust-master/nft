@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Web3 from "web3";
-import contract from "../src/build/contracts/Color.json";
+import contractJson from "../src/build/contracts/Emoji.json";
 
 class App extends React.Component {
   async componentWillMount() {
@@ -24,24 +24,31 @@ class App extends React.Component {
 
   async loadBlockchainData() {
     const web3 = window.web3;
-    // Load account
-    const accounts = await web3.eth.getAccounts();
-    this.setState({ account: accounts[0] });
+    const webeProvider = new Web3(
+      Web3.givenProvider || "http://localhost:7545"
+    );
+    const accounts = await webeProvider.eth.getAccounts();
 
-    const networkId = await web3.eth.net.getId();
-    const networkData = Color.networks[networkId];
-    if (networkData) {
-      const abi = Color.abi;
-      const address = networkData.address;
-      const contract = new web3.eth.Contract(abi, address);
-      this.setState({ contract });
-      const totalSupply = await contract.methods.totalSupply().call();
+    this.setState({ address: accounts[0] });
+    console.log("Account: " + this.state.address);
+
+    const netId = await web3.eth.net.getId();
+    const deployedNetwork = contractJson.networks[netId];
+
+    if (deployedNetwork) {
+      const emojiContract = new web3.eth.Contract(
+        contractJson.abi,
+        deployedNetwork.address
+      );
+      this.setState({ contract: emojiContract });
+
+      const totalSupply = await emojiContract.methods.totalSupply().call();
       this.setState({ totalSupply });
       // Load Colors
       for (var i = 1; i <= totalSupply; i++) {
-        const color = await contract.methods.colors(i - 1).call();
+        const emoji = await emojiContract.methods.emojis(i - 1).call();
         this.setState({
-          colors: [...this.state.colors, color],
+          emojis: [...this.state.emojis, emoji],
         });
       }
     } else {
@@ -52,11 +59,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.createEmoji = this.createEmoji.bind(this);
+    this.mint = this.mint.bind(this);
     this.state = {
-      emojiUnicode: "",
-      emoji: [],
+      emojiUnicode: "1F44B",
+      emojis: [],
       account: "",
+      contract: null,
+      totalSupply: 0,
     };
   }
 
@@ -93,44 +102,31 @@ class App extends React.Component {
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
                 <h1>Issue Token</h1>
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    const color = this.color.value;
-                    this.mint(color);
-                  }}
-                >
-                  <input
-                    type="text"
-                    className="form-control mb-1"
-                    placeholder="e.g. unicode"
-                    ref={(input) => {
-                      this.color = input;
-                    }}
-                  />
-                  <input
-                    type="submit"
-                    className="btn btn-block btn-primary"
-                    value="MINT"
-                  />
-                </form>
+                <input
+                  type="text"
+                  name="emojiUnicode"
+                  className="form-control mb-1"
+                  placeholder="e.g. HTML Code Decimal"
+                  onChange={this.handleChange}
+                />
+                <button type="submit" className="btn btn-block btn-primary">
+                  Mint
+                </button>
               </div>
             </main>
           </div>
           <hr />
-          {/* <div className="row text-center">
-            {this.state.colors.map((color, key) => {
+          <div className="row"></div>
+          <div className="row text-center">
+            {this.state.emojis.map((emoji, key) => {
               return (
                 <div key={key} className="col-md-3 mb-3">
-                  <div
-                    className="token"
-                    style={{ backgroundColor: color }}
-                  ></div>
-                  <div>{color}</div>
+                  <div className="token"></div>
+                  <div>{String.fromCodePoint("0x" + emoji)}</div>
                 </div>
               );
             })}
-          </div> */}
+          </div>
         </div>
       </div>
     );
