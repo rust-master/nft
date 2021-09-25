@@ -3,6 +3,25 @@ import "./App.css";
 import Web3 from "web3";
 import contractJson from "../src/build/contracts/Emoji.json";
 
+import { withStyles } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+
+const styles = (theme) => ({
+  root1: {
+    backgroundColor: "#fff",
+    maxWidth: 200,
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  Typo1: {
+    color: "#266AFB",
+    fontWeight: "bold",
+    textAlign: "left",
+  },
+});
+
 class App extends React.Component {
   async componentWillMount() {
     await this.loadWeb3();
@@ -87,6 +106,8 @@ class App extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -115,7 +136,7 @@ class App extends React.Component {
                   type="text"
                   name="emojiUnicode"
                   className="form-control mb-1"
-                  placeholder="e.g. HTML Code Decimal"
+                  placeholder="e.g. 2764"
                   onChange={this.handleChange}
                 />
                 <button
@@ -129,14 +150,32 @@ class App extends React.Component {
             </main>
           </div>
           <hr />
-          <div className="row"></div>
+          <div className="row">
+            Placeholder Emoji:{" "}
+            {String.fromCodePoint("0x" + this.state.emojiUnicode)}
+          </div>
           <div className="row text-center">
             {this.state.emojis.map((emoji, key) => {
               return (
-                <div key={key} className="col-md-3 mb-3">
-                  <div className="token"></div>
-                  <div>{String.fromCodePoint("0x" + emoji)}</div>
-                </div>
+                <Card className={classes.root1}>
+                  <CardContent>
+                    <div key={key} className="col-md-3 mb-3">
+                      <div className="token">
+                        {String.fromCodePoint("0x" + emoji)}
+                      </div>
+                    </div>
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      component="h5"
+                      className={classes.Typo1}
+                    >
+                      <h6 style={{ color: "#0073f8", textAlign: "center" }}>
+                        Emoji Code: {"0x" + emoji}
+                      </h6>
+                    </Typography>
+                  </CardContent>
+                </Card>
               );
             })}
           </div>
@@ -146,4 +185,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
