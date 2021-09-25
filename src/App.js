@@ -1,13 +1,62 @@
 import React from "react";
 import "./App.css";
+import Web3 from "web3";
+import contract from "../src/build/contracts/Color.json";
 
 class App extends React.Component {
+  async componentWillMount() {
+    await this.loadWeb3();
+    await this.loadBlockchainData();
+  }
+
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      window.alert(
+        "Non-Ethereum browser detected. You should consider trying MetaMask!"
+      );
+    }
+  }
+
+  async loadBlockchainData() {
+    const web3 = window.web3;
+    // Load account
+    const accounts = await web3.eth.getAccounts();
+    this.setState({ account: accounts[0] });
+
+    const networkId = await web3.eth.net.getId();
+    const networkData = Color.networks[networkId];
+    if (networkData) {
+      const abi = Color.abi;
+      const address = networkData.address;
+      const contract = new web3.eth.Contract(abi, address);
+      this.setState({ contract });
+      const totalSupply = await contract.methods.totalSupply().call();
+      this.setState({ totalSupply });
+      // Load Colors
+      for (var i = 1; i <= totalSupply; i++) {
+        const color = await contract.methods.colors(i - 1).call();
+        this.setState({
+          colors: [...this.state.colors, color],
+        });
+      }
+    } else {
+      window.alert("Smart contract not deployed to detected network.");
+    }
+  }
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.createEmoji = this.createEmoji.bind(this);
     this.state = {
       emojiUnicode: "",
+      emoji: [],
+      account: "",
     };
   }
 
@@ -17,9 +66,7 @@ class App extends React.Component {
     });
   };
 
-  createEmoji = () => {
-    const { emojiUnicode } = this.state;
-  };
+  mint = (emoji) => {};
 
   render() {
     return (
@@ -56,7 +103,7 @@ class App extends React.Component {
                   <input
                     type="text"
                     className="form-control mb-1"
-                    placeholder="e.g. #FFFFFF"
+                    placeholder="e.g. unicode"
                     ref={(input) => {
                       this.color = input;
                     }}
