@@ -108,6 +108,34 @@ class App extends React.Component {
   render() {
     const { classes } = this.props;
 
+    try {
+      console.log(window.device.version);
+    } catch (e) {
+      console.log("Error");
+    }
+
+    let ListTemplate;
+
+    ListTemplate = this.state.emojis.map((emoji, key) => (
+      <Card className={classes.root1}>
+        <CardContent>
+          <div key={key} className="col-md-3 mb-3">
+            <div className="token">{String.fromCodePoint("0x" + emoji)}</div>
+          </div>
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="h5"
+            className={classes.Typo1}
+          >
+            <h6 style={{ color: "#0073f8", textAlign: "center" }}>
+              Emoji Code: {"0x" + emoji}
+            </h6>
+          </Typography>
+        </CardContent>
+      </Card>
+    ));
+
     return (
       <div>
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -160,31 +188,7 @@ class App extends React.Component {
               {String.fromCodePoint("0x" + this.state.emojiUnicode)}
             </div>
           </div>
-          <div className="row text-center">
-            {this.state.emojis.map((emoji, key) => {
-              return (
-                <Card className={classes.root1}>
-                  <CardContent>
-                    <div key={key} className="col-md-3 mb-3">
-                      <div className="token">
-                        {String.fromCodePoint("0x" + emoji)}
-                      </div>
-                    </div>
-                    <Typography
-                      gutterBottom
-                      variant="h6"
-                      component="h5"
-                      className={classes.Typo1}
-                    >
-                      <h6 style={{ color: "#0073f8", textAlign: "center" }}>
-                        Emoji Code: {"0x" + emoji}
-                      </h6>
-                    </Typography>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+          <div className="row text-center">{ListTemplate}</div>
         </div>
       </div>
     );
