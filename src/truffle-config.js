@@ -1,6 +1,9 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider");
-const mnemonic = process.env.mnemonic;
+const mnemonic =
+  "like absurd often lava awful clump usual quarter skin duck tide forum";
 const projectID = process.env.WEB3_INFURA_PROJECT_ID;
+
+console.log(mnemonic);
 
 module.exports = {
   networks: {
@@ -15,7 +18,7 @@ module.exports = {
       provider: () =>
         new HDWalletProvider(
           mnemonic,
-          "https://rinkeby.infura.io/v3/" + projectID
+          "https://rinkeby.infura.io/v3/911c646088af4038aa4efd084025c220"
         ),
       network_id: 4, // Ropsten's id
       gas: 5500000, // Ropsten has a lower block limit than mainnet
