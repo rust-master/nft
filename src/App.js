@@ -100,7 +100,7 @@ class App extends React.Component {
       .send({ from: this.state.account })
       .once("receipt", (receipt) => {
         this.setState({
-          colors: [...this.state.colors, this.state.emojiUnicode],
+          emojis: [...this.state.emojis, this.state.emojiUnicode],
         });
       });
   };
