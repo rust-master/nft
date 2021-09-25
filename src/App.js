@@ -95,26 +95,32 @@ class App extends React.Component {
   };
 
   mint = () => {
-    this.state.contract.methods
-      .mint(this.state.emojiUnicode)
-      .send({ from: this.state.account })
-      .once("receipt", (receipt) => {
-        this.setState({
-          emojis: [...this.state.emojis, this.state.emojiUnicode],
+    try {
+      String.fromCodePoint("0x" + this.state.emojiUnicode);
+      this.state.contract.methods
+        .mint(this.state.emojiUnicode)
+        .send({ from: this.state.account })
+        .once("receipt", (receipt) => {
+          this.setState({
+            emojis: [...this.state.emojis, this.state.emojiUnicode],
+          });
         });
-      });
+    } catch (e) {
+      alert("Enter Correct Code");
+    }
   };
 
   render() {
     const { classes } = this.props;
 
-    try {
-      console.log(window.device.version);
-    } catch (e) {
-      console.log("Error");
-    }
-
+    let placeholder;
     let ListTemplate;
+
+    try {
+      placeholder = String.fromCodePoint("0x" + this.state.emojiUnicode);
+    } catch (e) {
+      alert("Enter Correct Code");
+    }
 
     ListTemplate = this.state.emojis.map((emoji, key) => (
       <Card className={classes.root1}>
@@ -184,8 +190,7 @@ class App extends React.Component {
           <hr />
           <div className="row">
             <div style={{ marginLeft: "10px" }}>
-              Placeholder Emoji:{" "}
-              {String.fromCodePoint("0x" + this.state.emojiUnicode)}
+              Placeholder Emoji: {placeholder}{" "}
             </div>
           </div>
           <div className="row text-center">{ListTemplate}</div>
