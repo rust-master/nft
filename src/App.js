@@ -54,8 +54,8 @@ class App extends React.Component {
     this.setState({ account: accounts[0] });
     console.log("Account: " + this.state.account);
 
-    const netId = await web3.eth.net.getId();
-    const deployedNetwork = contractJson.networks[netId];
+    //const netId = await web3.eth.net.getId();
+    const deployedNetwork = contractJson.networks[4];
 
     if (deployedNetwork) {
       const emojiContract = new web3.eth.Contract(
