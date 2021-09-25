@@ -29,8 +29,8 @@ class App extends React.Component {
     );
     const accounts = await webeProvider.eth.getAccounts();
 
-    this.setState({ address: accounts[0] });
-    console.log("Account: " + this.state.address);
+    this.setState({ account: accounts[0] });
+    console.log("Account: " + this.state.account);
 
     const netId = await web3.eth.net.getId();
     const deployedNetwork = contractJson.networks[netId];
@@ -75,7 +75,16 @@ class App extends React.Component {
     });
   };
 
-  mint = (emoji) => {};
+  mint = () => {
+    this.state.contract.methods
+      .mint(this.state.emojiUnicode)
+      .send({ from: this.state.account })
+      .once("receipt", (receipt) => {
+        this.setState({
+          colors: [...this.state.colors, this.state.emojiUnicode],
+        });
+      });
+  };
 
   render() {
     return (
@@ -109,7 +118,11 @@ class App extends React.Component {
                   placeholder="e.g. HTML Code Decimal"
                   onChange={this.handleChange}
                 />
-                <button type="submit" className="btn btn-block btn-primary">
+                <button
+                  onClick={this.mint}
+                  type="submit"
+                  className="btn btn-block btn-primary"
+                >
                   Mint
                 </button>
               </div>
