@@ -129,7 +129,11 @@ class App extends React.Component {
         </nav>
         <div className="container-fluid mt-5">
           <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
+            <main
+              role="main"
+              style={{ marginLeft: "40%" }}
+              className="col-lg-12 d-flex text-center"
+            >
               <div className="content mr-auto ml-auto">
                 <h1>Issue Token</h1>
                 <input
@@ -151,8 +155,10 @@ class App extends React.Component {
           </div>
           <hr />
           <div className="row">
-            Placeholder Emoji:{" "}
-            {String.fromCodePoint("0x" + this.state.emojiUnicode)}
+            <div style={{ marginLeft: "10px" }}>
+              Placeholder Emoji:{" "}
+              {String.fromCodePoint("0x" + this.state.emojiUnicode)}
+            </div>
           </div>
           <div className="row text-center">
             {this.state.emojis.map((emoji, key) => {
