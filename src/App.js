@@ -13,7 +13,7 @@ const styles = (theme) => ({
     backgroundColor: "#fff",
     maxWidth: 200,
     marginTop: 20,
-    marginLeft: 80,
+    margin: "0px auto",
   },
   Typo1: {
     color: "#266AFB",
@@ -28,7 +28,7 @@ class App extends React.Component {
     await this.loadBlockchainData();
   }
   componentDidMount() {
-    document.body.style.backgroundColor = "#d9ecec";
+    document.body.style.backgroundColor = "#1b2336";
   }
 
   async loadWeb3() {
@@ -155,7 +155,7 @@ class App extends React.Component {
             rel="noopener noreferrer"
             style={{ marginLeft: "5px" }}
           >
-            Emoji Tokens
+            Emoji Tokens - NFT ( Non-Fungible Token )
           </a>
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
@@ -167,13 +167,12 @@ class App extends React.Component {
         </nav>
         <div className="container-fluid mt-5">
           <div className="row">
-            <main
-              role="main"
-              style={{ marginLeft: "40%" }}
-              className="col-lg-12 d-flex text-center"
-            >
-              <div className="content mr-auto ml-auto">
-                <h1>Issue Token</h1>
+            <main role="main" className="col-lg-12 d-flex text-center">
+              <div
+                className="content mr-auto ml-auto"
+                style={{ margin: "0px auto" }}
+              >
+                <h1 style={{ color: "#fff" }}>Issue Token</h1>
                 <input
                   type="text"
                   name="emojiUnicode"
@@ -182,6 +181,7 @@ class App extends React.Component {
                   onChange={this.handleChange}
                 />
                 <button
+                  style={{ marginTop: "10px" }}
                   onClick={this.mint}
                   type="submit"
                   className="btn btn-block btn-primary"
@@ -191,12 +191,11 @@ class App extends React.Component {
               </div>
             </main>
           </div>
-          <hr />
-          <div className="row">
-            <div style={{ marginLeft: "10px" }}>
-              Placeholder Emoji: {placeholder}{" "}
-            </div>
+          <div style={{ marginLeft: "10px", color: "#fff" }}>
+            Placeholder Emoji: {placeholder}{" "}
           </div>
+          <hr style={{ color: "#fff" }} />
+          <div className="row"></div>
           <div className="row text-center">{ListTemplate}</div>
         </div>
       </div>
