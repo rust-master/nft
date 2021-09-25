@@ -1,3 +1,7 @@
+# Emoji Token DAPP - NFT (Non-Fungible Token)
+
+<img src="emojiDApp.png" />
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
