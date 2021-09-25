@@ -1,4 +1,4 @@
-# Emoji Token DAPP - NFT (Non-Fungible Token)
+# Emoji Tokens DAPP - NFT (Non-Fungible Token)
 
 <img src="emojiDApp.png" />
 
