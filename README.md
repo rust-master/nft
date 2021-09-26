@@ -4,7 +4,7 @@
 ### - Must have MetaMask Wallet
 ### - Ues Rinkeby Testnet in MetaMask
 
-[View Live Demo](https://github.com/facebook/create-react-app).
+[View Live Demo](https://emoji-token.herokuapp.com/)
 
 <img src="emojiDApp.png" />
 
