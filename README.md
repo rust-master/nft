@@ -1,6 +1,14 @@
 # Emoji Tokens DAPP - NFT (Non-Fungible Token)
 
+## Note: 
+### - Must have MetaMask Wallet
+### - Ues Rinkeby Testnet in MetaMask
+
+[View Live Demo](https://github.com/facebook/create-react-app).
+
 <img src="emojiDApp.png" />
+
+
 
 # Getting Started with Create React App
 
