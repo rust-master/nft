@@ -1,8 +1,8 @@
 # Emoji Tokens DAPP - NFT (Non-Fungible Token)
 
 #### Note: 
-##### - Must have MetaMask Wallet
-##### - Ues Rinkeby Testnet in MetaMask
+#####  Must have MetaMask Wallet
+#####  Ues Rinkeby Testnet in MetaMask
 
 [View Live Demo](https://emoji-token.herokuapp.com/)
 
